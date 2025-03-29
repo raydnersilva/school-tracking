@@ -1,0 +1,62 @@
+<div class="min-h-screen bg-gradient-to-r from-[#9a8f75] to-[#7F755D] flex items-center justify-center">
+  <div
+    class="relative w-full max-w-6xl bg-white rounded-lg shadow-lg flex overflow-hidden mx-4 sm:mx-6 md:mx-8 h-[80vh]">
+    <div class="hidden lg:block w-1/2 h-full">
+      <img src="assets/images/bus-roxo.jpg" alt="Transporte Escolar" class="w-full h-full object-contain">
+    </div>
+
+    <div class="w-full lg:w-1/2 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+      <div class="text-center mb-4">
+        <h2 class="text-4xl font-bold mb-4">
+          <span class="text-[#6c4c05]">Acesse o </span>
+          <span class="text-yellow-500">School</span><span class="text-red-500">Track</span>
+        </h2>
+
+
+        <p class="text-lg text-gray-600 max-w-md mx-auto">
+          Entre em sua conta e acompanhe em tempo real o transporte escolar do seu filho
+        </p>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="username" class="block text-base font-medium text-gray-700">Usuário</label>
+          <input type="text" id="username" name="username" class="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+            required>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="block text-base font-medium text-gray-700">Senha</label>
+          <input type="password" id="password" name="password" class="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+            required>
+        </div>
+
+        <div class="mb-4">
+          <label for="verification" class="block text-base font-medium text-gray-700">Código verificação</label>
+          <div class="flex items-center relative mb-2">
+            <input type="text" id="verification" name="verification"
+              class="w-full p-3 pr-10 mt-1 border border-gray-300 rounded-lg" [(ngModel)]="captchaInput"
+              (input)="validateCaptcha()" required>
+            <div class="absolute right-32 top-1/4 transform -translate-y-1/2">
+              <div [innerHTML]="captchaImage" class="w-5 h-5"></div>
+            </div>
+          </div>
+          <a [routerLink]="['/forgot-password']" class="text-sm text-[#6c4c05] hover:cursor-pointer">Esqueceu sua
+            senha?</a>
+        </div>
+
+        <div class="mt-4 flex justify-between items-center">
+          <button type="submit" class="bg-[#6c4c05] text-white py-3 px-6 rounded-lg hover:bg-[#8c6205]"
+            [disabled]="!isCaptchaValid">Entrar</button>
+          <p class="text-sm text-gray-600">
+            Não tem uma conta?
+            <a [routerLink]="['/register']" class="text-[#6c4c05] font-medium hover:underline">Cadastre-se</a>
+          </p>
+        </div>
+      </form>
+
+      <div *ngIf="!isCaptchaValid && captchaInput" class="text-red-500 mt-2">
+        Invalid CAPTCHA, please try again.
+      </div>
+    </div>
+  </div>
+</div>
