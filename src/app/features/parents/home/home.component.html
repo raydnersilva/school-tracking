@@ -1,0 +1,13 @@
+<div class="flex h-screen">
+  <app-sidebar [isMobile]="isMobile"></app-sidebar>
+
+  <main class="flex-1 overflow-auto">
+    <div class="lg:hidden bg-[#6c4c05] text-white p-4 shadow-md">
+      <button (click)="toggleSidebar()" class="text-white">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+    <router-outlet name="content"></router-outlet>
+  </main>
+</div>

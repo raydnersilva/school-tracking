@@ -3,7 +3,7 @@ import { CaptchaService } from '../../../core/auth/captcha.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private captchaService: CaptchaService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -40,7 +41,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.isCaptchaValid()) console.log('Login Bem-sucedido');
-    else console.log('Captcha incorreto');
+    this.router.navigate(['parent']);
   }
 }

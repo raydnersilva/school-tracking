@@ -1,0 +1,28 @@
+<div class="sidebar-container" [class.mobile]="isMobile" [class.open]="isOpen">
+  <div class="sidebar-header">
+    <div class="avatar-container">
+      <img src="assets/images/avatar-default.png" alt="Avatar" class="avatar">
+      <div class="user-info">
+        <span class="user-name">{{ 'Usuário' }}</span>
+        <span class="user-role">{{ getRoleName('parent') }}</span>
+      </div>
+    </div>
+    <button class="toggle-btn" (click)="toggleSidebar()" *ngIf="isMobile">
+      <mat-icon>{{ isOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+
+  <nav class="sidebar-menu">
+    <a *ngFor="let item of menuItens" [routerLink]="item.route" routerLinkActive="active" class="menu-item">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <span class="menu-label">{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="logout-btn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Sair</span>
+    </button>
+  </div>
+</div>

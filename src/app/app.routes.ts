@@ -16,4 +16,28 @@ export const routes: Routes = [
         (m) => m.RegisterComponent
       ),
   },
+  {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./features/auth/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent
+      ),
+  },
+  {
+    path: 'parent',
+    loadComponent: () =>
+      import('./features/parents/home/home.component').then(
+        (m) => m.HomeComponent
+      ),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/parents/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent
+          ),
+        outlet: 'content',
+      },
+    ],
+  },
 ];
