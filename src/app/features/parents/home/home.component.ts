@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
@@ -7,7 +6,7 @@ import { SidebarService } from '../../../core/services/sidebar.service';
 
 @Component({
   selector: 'app-home-dashboard',
-  imports: [CommonModule, SidebarComponent, RouterOutlet, MatIconModule],
+  imports: [SidebarComponent, RouterOutlet, MatIconModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
