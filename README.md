@@ -1,7 +1,8 @@
 # SchoolTrack - Sistema de Rastreamento de Ônibus Escolar
 
 ![Banner do Projeto](src/assets/images/banner.png)
-(src/assets/images/openstreet.png)
+
+![Banner do Dashboard](src/assets/images/openstreet.png)
 
 O SchoolTrack é uma solução inovadora para monitoramento em tempo real de frotas de transporte escolar, proporcionando segurança e tranquilidade para pais, alunos e gestores.
 
