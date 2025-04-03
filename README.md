@@ -25,7 +25,7 @@ O SchoolTrack é uma solução inovadora para monitoramento em tempo real de fro
 - Angular 19
 - Tailwind CSS
 - TypeScript
-- Google Maps API
+- OpenStreetMap (Gratuita)
 - Node.js (Backend)
 
 ## 📦 Estrutura de Arquivos
