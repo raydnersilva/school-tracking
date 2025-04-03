@@ -18,8 +18,8 @@ O SchoolTrack é uma solução inovadora para monitoramento em tempo real de fro
 ## 🖼️ Screenshots
 
 <div align="center">
-  <img src="src/assets/images/banner.png" alt="Tela de Login" width="600">
-  <img src="src/assets/images/cadastro.png" alt="Tela de Cadastro" width="600">
+  <img src="src/assets/images/banner.png" alt="Tela de Login">
+  <img src="src/assets/images/cadastro.png" alt="Tela de Cadastro">
 </div>
 
 ## 🛠️ Tecnologias Utilizadas
