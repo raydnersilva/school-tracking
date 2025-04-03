@@ -1,32 +1,6 @@
-<div class="min-h-screen bg-gray-50">
-  <!-- Cabeçalho -->
-  <header class="bg-[#6c4c05] text-white p-4 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold">
-        <span class="text-yellow-300">School</span><span class="text-red-300">Track</span>
-      </h1>
-      <div class="flex items-center space-x-4">
-        <div class="relative">
-          <select class="bg-[#8c6205] text-white px-3 py-1 rounded-md">
-            <option *ngFor="let child of children">{{ child }}</option>
-          </select>
-        </div>
-        <button class="p-2 rounded-full hover:bg-[#8c6205]">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Conteúdo Principal -->
+<div class="min-h-screen">
   <main class="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Mapa -->
-    <div class="lg:col-span-2 bg-white rounded-lg shadow-md p-4">
+    <div class="lg:col-span-2 bg-white rounded-lg shadow-md p-4 h-full flex flex-col">
       <h2 class="text-xl font-semibold text-[#6c4c05] mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-2" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd"
@@ -35,18 +9,19 @@
         </svg>
         Rastreamento do Ônibus
       </h2>
-      <!-- <app-bus-map></app-bus-map> -->
+      <div class="flex-grow">
+        <app-bus-map></app-bus-map>
+      </div>
     </div>
 
 
     <div class="space-y-6">
-      <!-- Horário -->
       <div class="bg-white rounded-lg shadow-md p-4">
         <app-schedule></app-schedule>
       </div>
 
       <div class="bg-white rounded-lg shadow-md p-4">
-        <!--  <app-notifications></app-notifications> -->
+        <app-notifications></app-notifications>
       </div>
 
 

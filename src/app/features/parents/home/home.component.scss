@@ -1,0 +1,28 @@
+@import "../../../shared/utils/_colors";
+
+.bg-primary-main {
+  background-color: map-get($primary, "main");
+}
+.bg-primary-light {
+  background-color: map-get($primary, "light");
+}
+.text-primary-dark {
+  color: map-get($primary, "dark");
+}
+
+.bg-accent-alert {
+  background-color: map-get($accent, "alert");
+}
+.text-accent-alert {
+  color: map-get($accent, "alert");
+}
+
+.bg-neutral-white {
+  background-color: white;
+}
+.text-neutral-dark {
+  color: map-get($neutral, "dark");
+}
+.border-neutral-gray {
+  border-color: map-get($neutral, "gray");
+}

@@ -1,1 +1,20 @@
-<p>notifications works!</p>
+<div>
+  <h2 class="text-xl font-semibold text-[#6c4c05] mb-4 flex items-center">
+    <mat-icon class="mr-2">notifications</mat-icon>
+    Notificações
+  </h2>
+
+  <div class="space-y-3">
+    @for (notification of notifications; track $index) {
+    <div class="p-3 border-l-4 rounded shadow-sm" [class.border-green-500]="notification.type === 'info'"
+      [class.border-yellow-500]="notification.type === 'warning'"
+      [class.border-red-500]="notification.type === 'alert'">
+      <div class="flex justify-between">
+        <span class="font-medium">{{ notification.title }}</span>
+        <span class="text-xs text-gray-500">{{ notification.time }}</span>
+      </div>
+      <p class="text-sm mt-1">{{ notification.message }}</p>
+    </div>
+    }
+  </div>
+</div>

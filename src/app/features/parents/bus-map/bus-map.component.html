@@ -1,0 +1,37 @@
+<div class="map-wrapper h-full w-full rounded-lg overflow-hidden bg-gray-100 relative">
+  <div id="leaflet-map-container" style="height: 100%; width: 100%; min-height: 500px;"></div>
+  <div *ngIf="!mapLoaded" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-10">
+    <div class="text-center p-4 bg-white rounded-lg shadow-md">
+      <mat-icon class="text-[#6c4c05] text-4xl animate-pulse">directions_bus</mat-icon>
+      <p class="mt-2 text-[#6c4c05] font-medium">Carregando rota do ônibus...</p>
+    </div>
+  </div>
+
+  <div class="absolute top-4 right-4 z-10 bg-white p-2 rounded-lg shadow-md flex gap-2">
+    <button (click)="changeRouteColor('#3366FF')" title="Azul"
+      class="w-6 h-6 bg-blue-500 rounded-full border-2 border-white"></button>
+    <button (click)="changeRouteColor('#FF0000')" title="Vermelho"
+      class="w-6 h-6 bg-red-500 rounded-full border-2 border-white"></button>
+    <button (click)="changeRouteColor('#FFD700')" title="Amarelo"
+      class="w-6 h-6 bg-yellow-500 rounded-full border-2 border-white"></button>
+  </div>
+
+  <div class="absolute bottom-4 left-4 z-10 bg-white p-3 rounded-lg shadow-md text-sm">
+    <div class="flex items-center mb-2">
+      <div class="w-4 h-4 bg-[#FFD700] mr-2 rounded-full"></div>
+      <span>Rota do ônibus</span>
+    </div>
+    <div class="flex items-center mb-2">
+      <div class="w-4 h-4 bg-blue-500 mr-2 rounded-full"></div>
+      <span>Ponto inicial</span>
+    </div>
+    <div class="flex items-center mb-2">
+      <div class="w-4 h-4 bg-green-500 mr-2 rounded-full"></div>
+      <span>Escola</span>
+    </div>
+    <div class="flex items-center">
+      <div class="w-4 h-4 bg-red-500 mr-2 rounded-full"></div>
+      <span>Ônibus em movimento</span>
+    </div>
+  </div>
+</div>

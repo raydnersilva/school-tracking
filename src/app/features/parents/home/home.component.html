@@ -1,13 +1,35 @@
-<div class="flex h-screen">
+<div class="flex h-screen bg-neutral-white">
   <app-sidebar [isMobile]="isMobile"></app-sidebar>
 
-  <main class="flex-1 overflow-auto">
-    <div class="lg:hidden bg-[#6c4c05] text-white p-4 shadow-md">
-      <button (click)="toggleSidebar()" class="text-white">
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <header
+      class="lg:hidden bg-primary-dark text-neutral-white p-4 border-b border-neutral-gray shadow-sm flex items-center">
+      <button (click)="toggleSidebar()"
+        class="text-neutral-white hover:bg-primary-main p-2 rounded-full transition-colors">
         <mat-icon>menu</mat-icon>
       </button>
-    </div>
+      <h1 class="text-xl font-bold ml-3">
+        <span class="text-primary-light">School</span><span class="text-accent-alert">Track</span>
+      </h1>
+    </header>
 
-    <router-outlet name="content"></router-outlet>
-  </main>
+    <header class="hidden lg:block bg-neutral-white border-b border-neutral-gray shadow-sm p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">
+          <span class="text-primary-light">School</span><span class="text-accent-alert">Track</span>
+        </h1>
+        <div class="flex items-center gap-4">
+          <button class="p-2 rounded-full hover:bg-primary-light transition-colors">
+            <mat-icon class="text-neutral-dark">notifications</mat-icon>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 overflow-auto bg-neutral-50 p-4 md:p-6">
+      <div class="container mx-auto">
+        <router-outlet name="content"></router-outlet>
+      </div>
+    </main>
+  </div>
 </div>

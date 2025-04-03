@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../../core/services/sidebar.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MenuItem } from '../../../core/models/menu-item';
-import { Subject } from 'rxjs/internal/Subject';
+import { COLORS } from '../../utils/colors';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,6 +16,7 @@ export class SidebarComponent {
   @Input() isMobile: boolean = false;
   menuItens: MenuItem[] = [];
   isOpen: boolean = true;
+  colors = COLORS;
 
   constructor(private sidebarService: SidebarService, private router: Router) {
     const userRole: string = 'parent';
