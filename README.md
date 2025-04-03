@@ -2,10 +2,6 @@
 
 ![Banner do Projeto](src/assets/images/banner.png)
 
-![Banner do Dashboard](src/assets/images/openstreet.png)
-
-![Banner do Login-Mobile](src/assets/images/login-mobile.png) ![Banner do Dashboard-Mobile](src/assets/images/mobile-dashboard.png)
-
 O SchoolTrack é uma solução inovadora para monitoramento em tempo real de frotas de transporte escolar, proporcionando segurança e tranquilidade para pais, alunos e gestores.
 
 ## ✨ Recursos Principais
@@ -20,6 +16,9 @@ O SchoolTrack é uma solução inovadora para monitoramento em tempo real de fro
 <div align="center">
   <img src="src/assets/images/banner.png" alt="Tela de Login">
   <img src="src/assets/images/cadastro.png" alt="Tela de Cadastro">
+  <img src="src/assets/images/openstreet.png" alt="Tela de Dashboard">
+  <img src="src/assets/images/login-mobile.png" alt="Tela de Login Mobile">
+  <img src="src/assets/images/mobile-dashboard.png" alt="Tela de Dashboard Mobile">
 </div>
 
 ## 🛠️ Tecnologias Utilizadas
