@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -25,6 +26,7 @@ export const routes: Routes = [
   },
   {
     path: 'parent',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./features/parents/home/home.component').then(
         (m) => m.HomeComponent
@@ -40,4 +42,29 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'driver',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/driver/driver-dashboard/driver-dashboard.component').then(
+        (m) => m.DriverDashboardComponent
+      ),
+  },
+  {
+    path: 'admin',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/admin/admin-dashboard/admin-dashboard.component').then(
+        (m) => m.AdminDashboardComponent
+      ),
+  },
+  {
+    path: 'chat',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/chat/chat.component').then(
+        (m) => m.ChatComponent
+      ),
+  },
+  { path: '**', redirectTo: 'login' },
 ];

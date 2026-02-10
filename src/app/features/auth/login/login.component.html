@@ -21,13 +21,13 @@
         <div class="mb-4">
           <label for="username" class="block text-base font-medium text-gray-700">Usuário</label>
           <input type="text" id="username" name="username" class="w-full p-3 mt-1 border border-gray-300 rounded-lg"
-            required>
+            [(ngModel)]="username" required>
         </div>
 
         <div class="mb-4">
           <label for="password" class="block text-base font-medium text-gray-700">Senha</label>
           <input type="password" id="password" name="password" class="w-full p-3 mt-1 border border-gray-300 rounded-lg"
-            required>
+            [(ngModel)]="password" required>
         </div>
 
         <div class="mb-4">
@@ -54,9 +54,11 @@
         </div>
       </form>
 
-      <div *ngIf="!isCaptchaValid && captchaInput" class="text-red-500 mt-2">
-        Invalid CAPTCHA, please try again.
-      </div>
+      @if (!isCaptchaValid && captchaInput) {
+        <div class="text-red-500 mt-2">
+          CAPTCHA inválido, tente novamente.
+        </div>
+      }
     </div>
   </div>
 </div>

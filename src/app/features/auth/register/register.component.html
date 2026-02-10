@@ -15,34 +15,40 @@
         </p>
       </div>
 
-      <form>
+      <form (ngSubmit)="onSubmit()">
         <div class="mb-4">
           <label for="nome" class="block text-base font-medium text-gray-700">Nome Completo</label>
-          <input type="text" id="nome" name="nome" class="w-full p-3 mt-1 border border-gray-300 rounded-lg" required>
+          <input type="text" id="nome" name="nome" class="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+            [(ngModel)]="name" required>
         </div>
 
         <div class="mb-4">
           <label for="email" class="block text-base font-medium text-gray-700">Email</label>
           <input type="email" id="email" name="email"
             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6c4c05] focus:border-[#6c4c05] transition"
-            placeholder="seu@email.com" required>
+            placeholder="seu@email.com" [(ngModel)]="email" required>
         </div>
 
         <div class="mb-4">
           <label for="password" class="block text-base font-medium text-gray-700">Senha</label>
           <input type="password" id="password" name="password" class="w-full p-3 mt-1 border border-gray-300 rounded-lg"
-            required>
+            [(ngModel)]="password" required>
         </div>
 
         <div class="mb-4">
           <label for="co-password" class="block text-base font-medium text-gray-700">Repita Senha</label>
-          <input type="co-password" id="co-password" name="co-password"
-            class="w-full p-3 mt-1 border border-gray-300 rounded-lg" required>
+          <input type="password" id="co-password" name="co-password"
+            class="w-full p-3 mt-1 border border-gray-300 rounded-lg" [(ngModel)]="confirmPassword" required>
         </div>
+
+        @if (errorMessage) {
+          <div class="mb-4 text-red-500 text-sm">{{ errorMessage }}</div>
+        }
 
         <div class="mt-4 flex justify-between items-center">
           <button type="submit"
-            class="bg-[#6c4c05] text-white py-3 px-6 rounded-lg hover:bg-[#8c6205]">Cadastre-se</button>
+            class="bg-[#6c4c05] text-white py-3 px-6 rounded-lg hover:bg-[#8c6205] disabled:opacity-50"
+            [disabled]="isLoading">{{ isLoading ? 'Cadastrando...' : 'Cadastre-se' }}</button>
           <p class="text-sm text-gray-600">
             Já tem uma conta?
             <a routerLink="/login" class="text-[#6c4c05] hover:underline">Faça login</a>

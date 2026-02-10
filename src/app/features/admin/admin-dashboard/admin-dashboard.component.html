@@ -1,0 +1,201 @@
+<div class="min-h-screen p-4 md:p-6">
+  <div class="max-w-6xl mx-auto space-y-6">
+    <h1 class="text-2xl font-bold text-[#6c4c05]">
+      <mat-icon class="align-middle mr-2">admin_panel_settings</mat-icon>
+      Painel Administrativo
+    </h1>
+
+    <!-- Tabs -->
+    <div class="flex gap-2 flex-wrap">
+      @for (tab of ['stats','users','buses','routes','students','notifications']; track tab) {
+        <button (click)="setTab(tab)"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition"
+          [class.bg-[#6c4c05]]="activeTab === tab"
+          [class.text-white]="activeTab === tab"
+          [class.bg-gray-100]="activeTab !== tab">
+          {{ tab === 'stats' ? 'Dashboard' : tab === 'users' ? 'Usuários' : tab === 'buses' ? 'Ônibus' : tab === 'routes' ? 'Rotas' : tab === 'students' ? 'Alunos' : 'Notificações' }}
+        </button>
+      }
+    </div>
+
+    <!-- Stats -->
+    @if (activeTab === 'stats' && stats) {
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+          <mat-icon class="text-[#6c4c05]">people</mat-icon>
+          <div class="text-2xl font-bold">{{ stats.totalStudents }}</div>
+          <div class="text-sm text-gray-500">Alunos</div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+          <mat-icon class="text-blue-600">directions_bus</mat-icon>
+          <div class="text-2xl font-bold">{{ stats.activeBuses }}/{{ stats.totalBuses }}</div>
+          <div class="text-sm text-gray-500">Ônibus Ativos</div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+          <mat-icon class="text-green-600">route</mat-icon>
+          <div class="text-2xl font-bold">{{ stats.activeRoutes }}/{{ stats.totalRoutes }}</div>
+          <div class="text-sm text-gray-500">Rotas Ativas</div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+          <mat-icon class="text-orange-600">person</mat-icon>
+          <div class="text-2xl font-bold">{{ stats.totalDrivers }}</div>
+          <div class="text-sm text-gray-500">Motoristas</div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+          <mat-icon class="text-purple-600">today</mat-icon>
+          <div class="text-2xl font-bold">{{ stats.tripsToday }}</div>
+          <div class="text-sm text-gray-500">Viagens Hoje</div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+          <mat-icon class="text-green-600">check_circle</mat-icon>
+          <div class="text-2xl font-bold">{{ stats.tripsCompleted }}</div>
+          <div class="text-sm text-gray-500">Viagens Concluídas</div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 text-center col-span-2">
+          <mat-icon class="text-yellow-600">star</mat-icon>
+          <div class="text-2xl font-bold">{{ stats.averageDriverRating || 'N/A' }}</div>
+          <div class="text-sm text-gray-500">Avaliação Média Motoristas</div>
+        </div>
+      </div>
+    }
+
+    <!-- Users -->
+    @if (activeTab === 'users') {
+      <div class="bg-white rounded-lg shadow-md p-6 space-y-4">
+        <h2 class="text-lg font-semibold">Criar Usuário</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <input [(ngModel)]="newUser.username" placeholder="Username" class="border rounded-lg p-2">
+          <input [(ngModel)]="newUser.name" placeholder="Nome" class="border rounded-lg p-2">
+          <input [(ngModel)]="newUser.email" placeholder="Email" class="border rounded-lg p-2">
+          <input [(ngModel)]="newUser.password" type="password" placeholder="Senha" class="border rounded-lg p-2">
+          <select [(ngModel)]="newUser.role" class="border rounded-lg p-2">
+            <option value="PARENT">Responsável</option>
+            <option value="DRIVER">Motorista</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+          <button (click)="createUser()" class="bg-[#6c4c05] text-white rounded-lg p-2 hover:bg-[#8c6205]">Criar</button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="p-2 text-left">ID</th>
+                <th class="p-2 text-left">Username</th>
+                <th class="p-2 text-left">Nome</th>
+                <th class="p-2 text-left">Email</th>
+                <th class="p-2 text-left">Role</th>
+                <th class="p-2">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of users; track user.id) {
+                <tr class="border-t">
+                  <td class="p-2">{{ user.id }}</td>
+                  <td class="p-2">{{ user.username }}</td>
+                  <td class="p-2">{{ user.name }}</td>
+                  <td class="p-2">{{ user.email }}</td>
+                  <td class="p-2">{{ user.role }}</td>
+                  <td class="p-2 text-center">
+                    <button (click)="deleteUser(user.id)" class="text-red-600 hover:text-red-800">
+                      <mat-icon class="text-sm">delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <!-- Buses -->
+    @if (activeTab === 'buses') {
+      <div class="bg-white rounded-lg shadow-md p-6 space-y-4">
+        <h2 class="text-lg font-semibold">Criar Ônibus</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <input [(ngModel)]="newBus.licensePlate" placeholder="Placa" class="border rounded-lg p-2">
+          <input [(ngModel)]="newBus.model" placeholder="Modelo" class="border rounded-lg p-2">
+          <input [(ngModel)]="newBus.capacity" type="number" placeholder="Capacidade" class="border rounded-lg p-2">
+          <button (click)="createBus()" class="bg-[#6c4c05] text-white rounded-lg p-2 hover:bg-[#8c6205]">Criar</button>
+        </div>
+        <div class="space-y-2">
+          @for (bus of buses; track bus.id) {
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div>
+                <span class="font-medium">{{ bus.licensePlate }}</span> - {{ bus.model }} ({{ bus.capacity }} lugares)
+              </div>
+              <button (click)="deleteBus(bus.id)" class="text-red-600 hover:text-red-800">
+                <mat-icon class="text-sm">delete</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Routes -->
+    @if (activeTab === 'routes') {
+      <div class="bg-white rounded-lg shadow-md p-6 space-y-4">
+        <h2 class="text-lg font-semibold">Criar Rota</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <input [(ngModel)]="newRoute.name" placeholder="Nome da Rota" class="border rounded-lg p-2">
+          <input [(ngModel)]="newRoute.description" placeholder="Descrição" class="border rounded-lg p-2">
+          <button (click)="createRoute()" class="bg-[#6c4c05] text-white rounded-lg p-2 hover:bg-[#8c6205]">Criar</button>
+        </div>
+        <div class="space-y-2">
+          @for (route of routes; track route.id) {
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div><span class="font-medium">{{ route.name }}</span> - {{ route.description }}</div>
+              <button (click)="deleteRoute(route.id)" class="text-red-600 hover:text-red-800">
+                <mat-icon class="text-sm">delete</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Students -->
+    @if (activeTab === 'students') {
+      <div class="bg-white rounded-lg shadow-md p-6 space-y-4">
+        <h2 class="text-lg font-semibold">Criar Aluno</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <input [(ngModel)]="newStudent.name" placeholder="Nome" class="border rounded-lg p-2">
+          <input [(ngModel)]="newStudent.grade" placeholder="Série" class="border rounded-lg p-2">
+          <input [(ngModel)]="newStudent.school" placeholder="Escola" class="border rounded-lg p-2">
+          <input [(ngModel)]="newStudent.parentId" placeholder="ID Responsável" class="border rounded-lg p-2">
+          <input [(ngModel)]="newStudent.busRouteId" placeholder="ID Rota" class="border rounded-lg p-2">
+          <button (click)="createStudent()" class="bg-[#6c4c05] text-white rounded-lg p-2 hover:bg-[#8c6205]">Criar</button>
+        </div>
+        <div class="space-y-2">
+          @for (student of students; track student.id) {
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div><span class="font-medium">{{ student.name }}</span> - {{ student.grade }} ({{ student.school }})</div>
+              <button (click)="deleteStudent(student.id)" class="text-red-600 hover:text-red-800">
+                <mat-icon class="text-sm">delete</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Notifications Broadcast -->
+    @if (activeTab === 'notifications') {
+      <div class="bg-white rounded-lg shadow-md p-6 space-y-4">
+        <h2 class="text-lg font-semibold">Enviar Notificação para Todos</h2>
+        <input [(ngModel)]="broadcastTitle" placeholder="Título" class="w-full border rounded-lg p-2">
+        <textarea [(ngModel)]="broadcastMessage" placeholder="Mensagem" rows="3" class="w-full border rounded-lg p-2"></textarea>
+        <select [(ngModel)]="broadcastType" class="border rounded-lg p-2">
+          <option value="info">Info</option>
+          <option value="warning">Aviso</option>
+          <option value="alert">Alerta</option>
+        </select>
+        <button (click)="broadcastNotification()" class="bg-[#6c4c05] text-white rounded-lg px-6 py-2 hover:bg-[#8c6205]">
+          Enviar para Todos
+        </button>
+      </div>
+    }
+  </div>
+</div>

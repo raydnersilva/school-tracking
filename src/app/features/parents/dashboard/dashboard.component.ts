@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ScheduleComponent } from '../schedule/schedule.component';
 import { NotificationsComponent } from '../notifications/notifications.component';
 import { BusMapComponent } from '../bus-map/bus-map.component';
@@ -8,5 +8,6 @@ import { BusMapComponent } from '../bus-map/bus-map.component';
   imports: [ScheduleComponent, NotificationsComponent, BusMapComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {}

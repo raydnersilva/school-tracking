@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,6 +9,7 @@ import { SidebarService } from '../../../core/services/sidebar.service';
   imports: [SidebarComponent, RouterOutlet, MatIconModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
   isMobile = window.innerWidth < 768;

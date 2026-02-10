@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
+  ElementRef,
   HostListener,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
@@ -11,14 +14,17 @@ import { LeafletDrawModule } from '@bluehalo/ngx-leaflet-draw';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { Subscription, timer } from 'rxjs';
+import { BusTrackingService, BusRouteData } from '../../../core/services/bus-tracking.service';
 
 @Component({
   selector: 'app-bus-map',
   imports: [CommonModule, MatIconModule, LeafletModule, LeafletDrawModule],
   templateUrl: './bus-map.component.html',
   styleUrl: './bus-map.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BusMapComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef<HTMLDivElement>;
   private map: L.Map | null = null;
   private routeControl: L.Routing.Control | null = null;
   private subs = new Subscription();
@@ -28,6 +34,7 @@ export class BusMapComponent implements AfterViewInit, OnDestroy {
   private progressLine!: L.Polyline;
   private routeCoordinates: L.LatLng[] = [];
   private animationSpeed = 200;
+  private activeBusId: number | null = null;
 
   private routeData = {
     start: L.latLng(-23.5505, -46.6333),
@@ -38,6 +45,8 @@ export class BusMapComponent implements AfterViewInit, OnDestroy {
       L.latLng(-23.558, -46.645),
     ],
   };
+
+  constructor(private busTrackingService: BusTrackingService) {}
 
   mapOptions = {
     layers: [
@@ -52,6 +61,8 @@ export class BusMapComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.loadRouteFromBackend();
+    this.connectWebSocket();
   }
 
   ngOnDestroy(): void {
@@ -60,11 +71,11 @@ export class BusMapComponent implements AfterViewInit, OnDestroy {
   }
 
   private initMap(): void {
-    const container = document.getElementById('leaflet-map-container');
+    const container = this.mapContainer?.nativeElement;
     if (!container || (container as any)._leaflet_map) return;
 
     this.destroyMap();
-    this.map = L.map('leaflet-map-container', this.mapOptions);
+    this.map = L.map(container, this.mapOptions);
 
     this.subs.add(
       timer(100).subscribe(() => {
@@ -184,7 +195,6 @@ export class BusMapComponent implements AfterViewInit, OnDestroy {
         layer.getLatLng().equals(this.routeData.start) &&
         !(layer as any)._icon?.src?.includes('bus.png')
       ) {
-        console.log((layer as any)._icon?.src);
         staticBusMarker = layer;
       }
     });
@@ -258,5 +268,60 @@ export class BusMapComponent implements AfterViewInit, OnDestroy {
       this.map.remove();
       this.map = null;
     }
+  }
+
+  private loadRouteFromBackend(): void {
+    this.subs.add(
+      this.busTrackingService.getRoutes().subscribe({
+        next: (routes: BusRouteData[]) => {
+          if (routes.length > 0) {
+            const route = routes[0];
+            if (route.stops.length >= 2) {
+              this.routeData.start = L.latLng(route.stops[0].latitude, route.stops[0].longitude);
+              this.routeData.school = L.latLng(
+                route.stops[route.stops.length - 1].latitude,
+                route.stops[route.stops.length - 1].longitude
+              );
+              this.routeData.stops = route.stops.slice(1, -1).map(
+                s => L.latLng(s.latitude, s.longitude)
+              );
+            }
+            if (route.busId) {
+              this.activeBusId = route.busId;
+              this.subscribeToLiveBus(route.busId);
+            }
+          }
+        },
+        error: () => {},
+      })
+    );
+  }
+
+  private connectWebSocket(): void {
+    this.busTrackingService.connect();
+  }
+
+  private subscribeToLiveBus(busId: number): void {
+    this.subs.add(
+      this.busTrackingService.subscribeToBus(busId).subscribe({
+        next: (bus) => {
+          if (bus.currentLatitude && bus.currentLongitude && this.map) {
+            const pos = L.latLng(bus.currentLatitude, bus.currentLongitude);
+            if (this.busMarker) {
+              this.busMarker.setLatLng(pos);
+            } else {
+              this.busMarker = L.marker(pos, {
+                icon: L.icon({
+                  iconUrl: 'assets/images/bus-moving.png',
+                  iconSize: [42, 42],
+                  iconAnchor: [20, 40],
+                }),
+                zIndexOffset: 1000,
+              }).addTo(this.map);
+            }
+          }
+        },
+      })
+    );
   }
 }

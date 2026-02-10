@@ -5,16 +5,18 @@
   </h2>
 
   <div class="space-y-3">
-    @for (notification of notifications; track $index) {
-    <div class="p-3 border-l-4 rounded shadow-sm" [class.border-green-500]="notification.type === 'info'"
-      [class.border-yellow-500]="notification.type === 'warning'"
-      [class.border-red-500]="notification.type === 'alert'">
-      <div class="flex justify-between">
-        <span class="font-medium">{{ notification.title }}</span>
-        <span class="text-xs text-gray-500">{{ notification.time }}</span>
+    @for (notification of notifications; track notification.id) {
+      <div class="p-3 border-l-4 rounded shadow-sm" [class.border-green-500]="notification.type === 'info'"
+        [class.border-yellow-500]="notification.type === 'warning'"
+        [class.border-red-500]="notification.type === 'alert'">
+        <div class="flex justify-between">
+          <span class="font-medium">{{ notification.title }}</span>
+          <span class="text-xs text-gray-500">{{ notification.createdAt }}</span>
+        </div>
+        <p class="text-sm mt-1">{{ notification.message }}</p>
       </div>
-      <p class="text-sm mt-1">{{ notification.message }}</p>
-    </div>
+    } @empty {
+      <p class="text-gray-500 text-sm">Nenhuma notificação no momento.</p>
     }
   </div>
 </div>

@@ -34,10 +34,22 @@ export class SidebarService {
       roles: ['parent', 'driver', 'admin'],
     },
     {
+      icon: 'chat',
+      label: 'Chat',
+      route: '/chat',
+      roles: ['parent', 'driver'],
+    },
+    {
       icon: 'settings',
       label: 'Configurações',
       route: '/settings',
       roles: ['parent', 'driver', 'admin'],
+    },
+    {
+      icon: 'dashboard',
+      label: 'Painel Motorista',
+      route: '/driver',
+      roles: ['driver'],
     },
     {
       icon: 'admin_panel_settings',

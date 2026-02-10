@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 .package-json
 .angular
+CLAUDE.md
+windsurf/rules.md

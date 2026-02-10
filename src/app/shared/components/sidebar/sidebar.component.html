@@ -3,20 +3,24 @@
     <div class="avatar-container">
       <img src="assets/images/avatar-default.png" alt="Avatar" class="avatar">
       <div class="user-info">
-        <span class="user-name">Usuário</span>
-        <span class="user-role">{{ getRoleName('parent') }}</span>
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-role">{{ getRoleName(userRole) }}</span>
       </div>
     </div>
-    <button class="toggle-btn" (click)="toggleSidebar()" *ngIf="isMobile">
-      <mat-icon>{{ isOpen ? 'close' : 'menu' }}</mat-icon>
-    </button>
+    @if (isMobile) {
+      <button class="toggle-btn" (click)="toggleSidebar()">
+        <mat-icon>{{ isOpen ? 'close' : 'menu' }}</mat-icon>
+      </button>
+    }
   </div>
 
   <nav class="sidebar-menu">
-    <a *ngFor="let item of menuItens" [routerLink]="item.route" routerLinkActive="active" class="menu-item">
-      <mat-icon>{{ item.icon }}</mat-icon>
-      <span class="menu-label">{{ item.label }}</span>
-    </a>
+    @for (item of menuItens; track item.route) {
+      <a [routerLink]="item.route" routerLinkActive="active" class="menu-item">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span class="menu-label">{{ item.label }}</span>
+      </a>
+    }
   </nav>
 
   <div class="sidebar-footer">

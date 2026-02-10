@@ -1,0 +1,37 @@
+<div class="flex flex-col h-[calc(100vh-200px)] max-w-3xl mx-auto">
+  <div class="bg-[#6c4c05] text-white p-4 rounded-t-lg flex items-center">
+    <mat-icon class="mr-2">chat</mat-icon>
+    <h2 class="text-lg font-semibold">Chat</h2>
+  </div>
+
+  <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+    @for (msg of messages; track msg.id) {
+      <div class="flex" [class.justify-end]="isOwnMessage(msg)">
+        <div class="max-w-[70%] rounded-lg p-3 shadow-sm"
+          [class.bg-[#6c4c05]]="isOwnMessage(msg)"
+          [class.text-white]="isOwnMessage(msg)"
+          [class.bg-white]="!isOwnMessage(msg)">
+          @if (!isOwnMessage(msg)) {
+            <p class="text-xs font-semibold text-[#6c4c05] mb-1">{{ msg.senderName }}</p>
+          }
+          <p class="text-sm">{{ msg.content }}</p>
+          <p class="text-xs mt-1 opacity-70">{{ msg.sentAt | date:'HH:mm' }}</p>
+        </div>
+      </div>
+    } @empty {
+      <div class="flex items-center justify-center h-full">
+        <p class="text-gray-400">Nenhuma mensagem ainda. Comece a conversa!</p>
+      </div>
+    }
+  </div>
+
+  <div class="bg-white border-t p-3 rounded-b-lg flex gap-2">
+    <input [(ngModel)]="newMessage" (keyup.enter)="sendMessage()"
+      placeholder="Digite sua mensagem..."
+      class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#6c4c05] focus:border-[#6c4c05] outline-none">
+    <button (click)="sendMessage()" [disabled]="!newMessage.trim()"
+      class="bg-[#6c4c05] text-white px-4 py-2 rounded-lg hover:bg-[#8c6205] transition disabled:opacity-50">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+</div>
